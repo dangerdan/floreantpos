@@ -24,7 +24,8 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Set;
 
-import org.hibernate.Hibernate;
+import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
 
 import com.floreantpos.PosLog;
 import com.floreantpos.model.base.BaseShopFloor;
@@ -58,7 +59,6 @@ public class ShopFloor extends BaseShopFloor {
 
 	@Override
 	public void setImage(Blob image) {
-		//super.setImage(image);
 		try {
 			this.imageData = toByteArray(image);
 		} catch (Exception e) {
@@ -68,7 +68,16 @@ public class ShopFloor extends BaseShopFloor {
 
 	@Override
 	public Blob getImage() {
-		return Hibernate.createBlob(this.imageData);
+		try {
+			return new SerialBlob(this.imageData);
+		} catch (SerialException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	@Override

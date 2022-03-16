@@ -31,6 +31,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.internal.SessionImpl;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 
@@ -118,7 +119,9 @@ public class DatabaseUtil {
 
 		try {
 			session = dao.createNewSession();
-			Connection connection = session.connection();
+
+			SessionImpl sessionImpl = (SessionImpl) session;
+			Connection connection = sessionImpl.connection();
 			String[] tables = { "CUSTOMER", "GRATUITY", "INVENTORY_GROUP", "INVENTORY_ITEM", "INVENTORY_LOCATION", "INVENTORY_META_CODE",
 					"INVENTORY_TRANSACTION", "INVENTORY_TRANSACTION_TYPE", "INVENTORY_UNIT", "INVENTORY_VENDOR", "INVENTORY_WAREHOUSE", "KITCHEN_TICKET",
 					"KITCHEN_TICKET_ITEM", "MENUITEM_MODIFIERGROUP", "MENU_CATEGORY", "MENU_GROUP", "MENU_ITEM", "MENU_MODIFIER", "MENU_MODIFIER_GROUP",

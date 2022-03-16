@@ -21,7 +21,6 @@ import java.util.List;
 
 import javax.swing.AbstractAction;
 
-import com.floreantpos.actions.PosAction;
 import com.floreantpos.config.ui.ConfigurationDialog;
 
 
@@ -72,5 +71,11 @@ public class AbstractFloreantPlugin implements FloreantPlugin {
         // TODO Auto-generated method stub
         
     }
+
+	@Override
+	public void initUI() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

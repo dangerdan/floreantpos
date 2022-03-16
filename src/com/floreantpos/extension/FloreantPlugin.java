@@ -30,6 +30,7 @@ public interface FloreantPlugin extends Plugin {
 	String getId();
 	String getName();
 	void init();
+	void initUI();
 	void initBackoffice();
 	void initConfigurationView(ConfigurationDialog dialog);
 	<T> List<T> getSpecialFunctionActions();

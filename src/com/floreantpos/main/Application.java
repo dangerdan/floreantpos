@@ -136,10 +136,6 @@ public class Application {
 		posWindow.setVisibleWelcomeHeader(false);
 	}
 
-	/*private void initializeTouchScroll() {
-		Toolkit.getDefaultToolkit().addAWTEventListener(new TouchScrollHandler(), AWTEvent.MOUSE_EVENT_MASK + AWTEvent.MOUSE_MOTION_EVENT_MASK);
-	}*/
-
 	private void setApplicationLook() {
 		try {
 			PlasticXPLookAndFeel.setPlasticTheme(new ExperienceBlue());
@@ -174,8 +170,7 @@ public class Application {
 			RootView.getInstance().initializeViews();
 			LoginView.getInstance().initializeOrderButtonPanel();
 			LoginView.getInstance().setTerminalId(terminal.getId());
-			//if (hasUpdateScheduleToday())
-			//	checkAvailableUpdates();
+			
 			setSystemInitialized(true);
 			PaymentGatewayPlugin paymentGateway = CardConfig.getPaymentGateway();
 
@@ -197,41 +192,6 @@ public class Application {
 		} finally {
 			getPosWindow().setGlassPaneVisible(false);
 		}
-	}
-
-	private void checkAvailableUpdates() {
-		PosWebService service = new PosWebService();
-		try {
-			String versionInfo = service.getAvailableNewVersions(TerminalUtil.getSystemUID(), Application.VERSION);
-			if (versionInfo == null || versionInfo.equals("UP_TO_DATE")) { //$NON-NLS-1$
-				return;
-			}
-			if (versionInfo.startsWith("[")) { //$NON-NLS-1$
-				versionInfo = versionInfo.replace("[", "").replace(",]", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				String[] availableNewVersions = versionInfo.split(","); //$NON-NLS-1$
-				if (availableNewVersions.length > 0) {
-					UpdateDialog dialog = new UpdateDialog(availableNewVersions, false, false);
-					dialog.pack();
-					dialog.open();
-				}
-			}
-		} catch (Exception ex) {
-			PosLog.error(getClass(), ex);
-		}
-	}
-
-	private boolean hasUpdateScheduleToday() {
-		String status = TerminalConfig.getCheckUpdateStatus();
-		if (status.equals("Never")) { //$NON-NLS-1$
-			return false;
-		}
-		else if (status.equals("Weekly")) { //$NON-NLS-1$
-			return DateUtil.isStartOfWeek(new Date());
-		}
-		else if (status.equals("Monthly")) { //$NON-NLS-1$
-			return DateUtil.isStartOfMonth(new Date());
-		}
-		return true;
 	}
 
 	public void initializeSystemHeadless() {
@@ -266,7 +226,7 @@ public class Application {
 	}
 
 	private void initPlugins() {
-		ExtensionManager.getInstance().initialize(Main.class);
+		ExtensionManager.getInstance().initialize();
 		List<FloreantPlugin> plugins = ExtensionManager.getPlugins();
 		for (FloreantPlugin floreantPlugin : plugins) {
 			floreantPlugin.initUI();
@@ -289,10 +249,10 @@ public class Application {
 
 	private void initTerminal() {
 		String terminalKey = TerminalUtil.getSystemUID();
-		Terminal terminal = TerminalDAO.getInstance().getByTerminalKey(terminalKey);
-		if (terminal != null) {
-			TerminalConfig.setTerminalId(terminal.getId());
-			this.terminal = terminal;
+		Terminal terminalInstance = TerminalDAO.getInstance().getByTerminalKey(terminalKey);
+		if (terminalInstance != null) {
+			TerminalConfig.setTerminalId(terminalInstance.getId());
+			this.terminal = terminalInstance;
 			return;
 		}
 		int terminalId = TerminalConfig.getTerminalId();
@@ -303,24 +263,24 @@ public class Application {
 		}
 
 		try {
-			terminal = TerminalDAO.getInstance().get(Integer.valueOf(terminalId));
-			if (terminal == null) {
-				terminal = new Terminal();
-				terminal.setId(terminalId);
-				terminal.setTerminalKey(terminalKey);
-				terminal.setName(String.valueOf("Terminal " + terminalId)); //$NON-NLS-1$
-				TerminalDAO.getInstance().saveOrUpdate(terminal);
+			terminalInstance = TerminalDAO.getInstance().get(Integer.valueOf(terminalId));
+			if (terminalInstance == null) {
+				terminalInstance = new Terminal();
+				terminalInstance.setId(terminalId);
+				terminalInstance.setTerminalKey(terminalKey);
+				terminalInstance.setName(String.valueOf("Terminal " + terminalId)); //$NON-NLS-1$
+				TerminalDAO.getInstance().saveOrUpdate(terminalInstance);
 			}
-			else if (StringUtils.isEmpty(terminal.getTerminalKey())) {
-				terminal.setTerminalKey(terminalKey);
-				TerminalDAO.getInstance().saveOrUpdate(terminal);
+			else if (StringUtils.isEmpty(terminalInstance.getTerminalKey())) {
+				terminalInstance.setTerminalKey(terminalKey);
+				TerminalDAO.getInstance().saveOrUpdate(terminalInstance);
 			}
 		} catch (Exception e) {
 			throw new DatabaseConnectionException();
 		}
 
 		TerminalConfig.setTerminalId(terminalId);
-		this.terminal = terminal;
+		this.terminal = terminalInstance;
 	}
 
 	public void refreshRestaurant() {
@@ -434,8 +394,6 @@ public class Application {
 		else if (selectedValue.equals(Messages.getString("Application.5"))) { //$NON-NLS-1$
 			posWindow.saveSizeAndLocation();
 			System.exit(0);
-		}
-		else {
 		}
 	}
 

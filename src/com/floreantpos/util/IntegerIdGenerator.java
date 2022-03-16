@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 import java.sql.Timestamp;
 
 import org.hibernate.HibernateException;
-import org.hibernate.engine.SessionImplementor;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.id.IdentifierGenerator;
 
 import com.floreantpos.model.dao.RestaurantDAO;

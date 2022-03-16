@@ -159,18 +159,8 @@ public class DefaultOrderServiceExtension extends OrderServiceExtension {
 	}
 
 	@Override
-	public void initConfigurationView(JDialog dialog) {
-
-	}
-
-	@Override
 	public String getId() {
 		return "DefaultOrderServiceExtension"; //$NON-NLS-1$
-	}
-
-	@Override
-	public String getSecurityCode() {
-		return "-400343452";
 	}
 
 	@Override
@@ -201,21 +191,6 @@ public class DefaultOrderServiceExtension extends OrderServiceExtension {
 	@Override
 	public List<AbstractAction> getSpecialFunctionActions() {
 		return null;
-	}
-
-	@Override
-	public String getProductVersion() {
-		return null;
-	}
-
-	@Override
-	public Component getParent() {
-		return null;
-	}
-
-	@Override
-	public boolean requireLicense() {
-		return false;
 	}
 
 	@Override

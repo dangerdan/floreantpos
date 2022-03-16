@@ -25,6 +25,7 @@ import java.util.Properties;
 
 import org.hibernate.HibernateException;
 import org.hibernate.MappingException;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.usertype.ParameterizedType;
 import org.hibernate.usertype.UserType;
 
@@ -103,5 +104,19 @@ public class EnumUserType implements UserType, ParameterizedType {
         if (null == x || null == y)  
             return false;  
         return x.equals(y);  
+    }
+
+    @Override
+    public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner)
+            throws HibernateException, SQLException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void nullSafeSet(PreparedStatement st, Object value, int index, SessionImplementor session)
+            throws HibernateException, SQLException {
+        // TODO Auto-generated method stub
+        
     }  
 }  
