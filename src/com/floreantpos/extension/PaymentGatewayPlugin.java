@@ -17,10 +17,13 @@
  */
 package com.floreantpos.extension;
 
+import javax.swing.JDialog;
+
 import com.floreantpos.config.ui.ConfigurationView;
 import com.floreantpos.model.PosTransaction;
 import com.floreantpos.model.Ticket;
 import com.floreantpos.ui.views.payment.CardProcessor;
+import java.awt.Component;
 
 public abstract class PaymentGatewayPlugin extends AbstractFloreantPlugin {
 	public abstract boolean shouldShowCardInputProcessor();
@@ -37,4 +40,26 @@ public abstract class PaymentGatewayPlugin extends AbstractFloreantPlugin {
 	public abstract void printTicketWithTipsBlock(Ticket ticket);
 
 	public abstract void printTransaction(PosTransaction transaction, boolean storeCopy, boolean customerCopy);
+
+    public String getProductName() {
+        return null;
+    }
+
+    @Override
+    public String getId() {
+        return null;
+    }
+
+	public abstract boolean requireLicense();
+
+	public abstract void initUI();
+
+
+	public abstract void initConfigurationView(JDialog dialog);
+
+	public abstract String getProductVersion();
+
+
+	public abstract Component getParent();
+
 }

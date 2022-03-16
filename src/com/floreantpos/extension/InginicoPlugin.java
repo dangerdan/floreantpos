@@ -112,4 +112,10 @@ public class InginicoPlugin extends PaymentGatewayPlugin {
 	@Override
 	public void printTicketWithTipsBlock(Ticket ticket) {
 	}
+
+	@Override
+	public boolean requireLicense() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
