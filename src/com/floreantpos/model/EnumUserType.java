@@ -43,7 +43,7 @@ public class EnumUserType implements UserType, ParameterizedType {
       try {  
             this.clazz = Class.forName(enumClassName);  
         } catch (ClassNotFoundException e) {  
-         throw new MappingException("enumClass " + enumClassName + " not found", e);   //$NON-NLS-1$ //$NON-NLS-2$
+         throw new MappingException("enumClass " + enumClassName + " was not found", e);   //$NON-NLS-1$ //$NON-NLS-2$
         }  
    }  
      

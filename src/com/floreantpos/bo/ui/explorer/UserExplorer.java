@@ -63,7 +63,7 @@ public class UserExplorer extends TransparentPanel {
 
 					UserForm editor = new UserForm();
 					if (userWithMaxId != null) {
-						editor.setId(new Integer(userWithMaxId.intValue() + 1));
+						editor.setId(Integer.valueOf(userWithMaxId.intValue() + 1));
 					}
 					BeanEditorDialog dialog = new BeanEditorDialog(POSUtil.getBackOfficeWindow(), editor);
 					dialog.open();

@@ -23,7 +23,7 @@
 		<property name="hibernate.max_fetch_depth">3</property>
 		<property name="show_sql">false</property>
 
-		<mapping resource="com/floreantpos/model/ActionHistory.hbm.xml" />
+		<mapping resource="models/ActionHistory.hbm.xml" />
 		<mapping resource="com/floreantpos/model/AttendenceHistory.hbm.xml" />
 		<mapping resource="com/floreantpos/model/CashDrawerResetHistory.hbm.xml" />
 		<mapping resource="com/floreantpos/model/CookingInstruction.hbm.xml" />

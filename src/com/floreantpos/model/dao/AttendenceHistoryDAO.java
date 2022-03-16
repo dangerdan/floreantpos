@@ -56,7 +56,7 @@ public class AttendenceHistoryDAO extends BaseAttendenceHistoryDAO {
 			Criteria criteria = session.createCriteria(getReferenceClass());
 			criteria.add(Restrictions.ge(AttendenceHistory.PROP_CLOCK_IN_TIME, fromDay));
 			criteria.add(Restrictions.le(AttendenceHistory.PROP_CLOCK_IN_TIME, toDay));
-			criteria.add(Restrictions.le(AttendenceHistory.PROP_CLOCK_IN_HOUR, new Short((short) hour)));
+			criteria.add(Restrictions.le(AttendenceHistory.PROP_CLOCK_IN_HOUR, Short.valueOf((short) hour)));
 
 			if (userType != null) {
 				criteria.createAlias(AttendenceHistory.PROP_USER, "u"); //$NON-NLS-1$

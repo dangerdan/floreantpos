@@ -104,7 +104,7 @@ public class PosWindow extends JFrame implements WindowListener {
 		statusBarContainer.add(new JSeparator(JSeparator.HORIZONTAL), BorderLayout.NORTH);
 		ImageIcon icon = IconFactory.getIcon("/ui_icons/", "footer-logo.png");
 		statusLabel.setIcon(icon);
-		//statusLabel.setText("Floreant POS by OROCUBE LLC.");
+//		statusLabel.setText("FabuPos");
 		statusBarContainer.add(infoPanel, BorderLayout.CENTER);
 		getContentPane().add(statusBarContainer, BorderLayout.SOUTH);
 		clockTimer.start();

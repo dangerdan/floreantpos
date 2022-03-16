@@ -268,7 +268,7 @@ public class SalesSummaryDAO extends _RootDAO {
 			session = getSession();
 
 			//retrieve restaurant information and set it to sales summary
-			Restaurant restaurant = (Restaurant) get(Restaurant.class, new Integer(1), session);
+			Restaurant restaurant = (Restaurant) get(Restaurant.class, Integer.valueOf(1), session);
 			if (restaurant != null) {
 				salesSummary.setCapacity(restaurant.getCapacity() != null ? restaurant.getCapacity().intValue() : 0);
 				salesSummary.setTables(restaurant.getTables() != null ? restaurant.getTables().intValue() : 0);

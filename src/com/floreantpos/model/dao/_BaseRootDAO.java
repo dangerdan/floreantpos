@@ -736,7 +736,7 @@ public abstract class _BaseRootDAO {
 		Integer rtn = (Integer) run (
 			new TransactionRunnable () {
 				public Object run (Session s) {
-					return new Integer(delete((Query) query, s));
+					return Integer.valueOf(delete((Query) query, s));
 				}
 			});
 		return rtn.intValue();

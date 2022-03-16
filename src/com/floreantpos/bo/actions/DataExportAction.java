@@ -21,7 +21,6 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.AbstractAction;

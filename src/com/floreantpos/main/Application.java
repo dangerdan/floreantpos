@@ -303,7 +303,7 @@ public class Application {
 		}
 
 		try {
-			terminal = TerminalDAO.getInstance().get(new Integer(terminalId));
+			terminal = TerminalDAO.getInstance().get(Integer.valueOf(terminalId));
 			if (terminal == null) {
 				terminal = new Terminal();
 				terminal.setId(terminalId);

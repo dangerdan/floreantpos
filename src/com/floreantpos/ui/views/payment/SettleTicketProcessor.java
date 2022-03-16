@@ -29,7 +29,6 @@ import org.hibernate.StaleStateException;
 import com.floreantpos.Messages;
 import com.floreantpos.POSConstants;
 import com.floreantpos.PosException;
-import com.floreantpos.PosLog;
 import com.floreantpos.config.CardConfig;
 import com.floreantpos.config.TerminalConfig;
 import com.floreantpos.extension.InginicoPlugin;
@@ -59,7 +58,7 @@ import com.floreantpos.util.POSUtil;
 
 public class SettleTicketProcessor implements CardInputListener {
 	public static PosPaymentWaitDialog waitDialog = new PosPaymentWaitDialog();
-	private Vector<PaymentListener> paymentListeners = new Vector<PaymentListener>(3);
+	private Vector<PaymentListener> paymentListeners = new Vector<>(3);
 	private double tenderAmount;
 	private PaymentType paymentType;
 	private Ticket ticket;
@@ -118,10 +117,7 @@ public class SettleTicketProcessor implements CardInputListener {
 				customPaymentDialog.pack();
 				customPaymentDialog.open();
 
-				if (customPaymentDialog.isCanceled())
-					return;
-
-				if (!confirmPayment()) {
+			if (customPaymentDialog.isCanceled() || !confirmPayment()) {
 					return;
 				}
 
