@@ -8,6 +8,7 @@
                 
         <wb-resource deploy-path="/" source-path="/i18n"/>
         <wb-resource deploy-path="/" source-path="/target/generated-sources/annotations"/>
+        <wb-resource deploy-path="/" source-path="/profiles/default"/>
             
     </wb-module>
     
