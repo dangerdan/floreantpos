@@ -24,7 +24,7 @@
 		<property name="show_sql">false</property>
 
 		<mapping resource="models/ActionHistory.hbm.xml" />
-		<mapping resource="com/floreantpos/model/AttendenceHistory.hbm.xml" />
+		<mapping resource="models/AttendenceHistory.hbm.xml" />
 		<mapping resource="com/floreantpos/model/CashDrawerResetHistory.hbm.xml" />
 		<mapping resource="com/floreantpos/model/CookingInstruction.hbm.xml" />
 		<mapping resource="com/floreantpos/model/CouponAndDiscount.hbm.xml" />
