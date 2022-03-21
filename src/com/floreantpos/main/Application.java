@@ -35,11 +35,6 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.RandomUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.floreantpos.IconFactory;
 import com.floreantpos.Messages;
 import com.floreantpos.POSConstants;
@@ -66,13 +61,10 @@ import com.floreantpos.model.dao.OrderTypeDAO;
 import com.floreantpos.model.dao.PrinterConfigurationDAO;
 import com.floreantpos.model.dao.RestaurantDAO;
 import com.floreantpos.model.dao.TerminalDAO;
-import com.floreantpos.model.util.DateUtil;
 import com.floreantpos.posserver.PosServer;
-import com.floreantpos.services.PosWebService;
 import com.floreantpos.swing.PosUIManager;
 import com.floreantpos.ui.dialog.POSMessageDialog;
 import com.floreantpos.ui.dialog.PasswordEntryDialog;
-import com.floreantpos.ui.dialog.UpdateDialog;
 import com.floreantpos.ui.views.LoginView;
 import com.floreantpos.ui.views.order.OrderView;
 import com.floreantpos.ui.views.order.RootView;
@@ -84,8 +76,13 @@ import com.floreantpos.util.POSUtil;
 import com.floreantpos.util.ShiftUtil;
 import com.floreantpos.util.UserNotFoundException;
 import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
-import com.jgoodies.looks.plastic.theme.ExperienceBlue;
+import com.jgoodies.looks.plastic.theme.LightGray;
 import com.orocube.common.util.TerminalUtil;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.RandomUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class Application {
 	private static Log logger = LogFactory.getLog(Application.class);
@@ -138,9 +135,8 @@ public class Application {
 
 	private void setApplicationLook() {
 		try {
-			PlasticXPLookAndFeel.setPlasticTheme(new ExperienceBlue());
+			PlasticXPLookAndFeel.setPlasticTheme(new LightGray());
 			UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
-			initializeFont();
 		} catch (Exception ignored) {
 		}
 	}
@@ -325,38 +321,6 @@ public class Application {
 		}
 		return instance;
 	}
-
-	//	public void shutdownPOS() {
-	//
-	//		JOptionPane optionPane = new JOptionPane(com.floreantpos.POSConstants.SURE_SHUTDOWN_, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
-	//		Object[] options = optionPane.getComponents();
-	//		for (Object object : options) {
-	//			if (object instanceof JPanel) {
-	//				JPanel panel = (JPanel) object;
-	//				Component[] components = panel.getComponents();
-	//				for (Component component : components) {
-	//					if (component instanceof JButton) {
-	//						component.setPreferredSize(new Dimension(component.getPreferredSize().width, 60));
-	//					}
-	//				}
-	//			}
-	//		}
-	//
-	//		JDialog dialog = optionPane.createDialog(POSUtil.getFocusedWindow(), com.floreantpos.POSConstants.MDS_POS);
-	//		dialog.setVisible(true);
-	//
-	//		Object selectedValue = optionPane.getValue();
-	//
-	//		if (selectedValue == null)
-	//			return;
-	//
-	//		if (selectedValue instanceof Integer) {
-	//			if (((Integer) selectedValue).intValue() == JOptionPane.YES_OPTION) {
-	//				posWindow.saveSizeAndLocation();
-	//				System.exit(0);
-	//			}
-	//		}
-	//	}
 
 	public void shutdownPOS() {
 		JOptionPane optionPane = new JOptionPane(Messages.getString("Application.1"), JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
@@ -576,97 +540,6 @@ public class Application {
 	public String getLocation() {
 		File file = new File(getClass().getProtectionDomain().getCodeSource().getLocation().getFile());
 		return file.getParent();
-	}
-
-	/*private void initializeFont() {
-			Font sourceFont = UIManager.getFont("Label.font"); //$NON-NLS-1$
-			int size = sourceFont.getSize();
-			
-			PosLog.debug(getClass(),"Default font size: " + size);
-			PosLog.debug(getClass(),"Expected font size: 12");
-			
-			double scaleFactor = (double) (size / 12.0);
-			PosLog.debug(getClass(),"Setting scale factor: " + scaleFactor);
-			
-			//TerminalConfig.setScreenScaleFactor(scaleFactor);
-		
-	
-		String uiFont = TerminalConfig.getUiDefaultFont();
-		int stylePlain = Font.PLAIN;
-		int styleBold = Font.BOLD;
-		if (StringUtils.isEmpty(uiFont)) {
-			Font sourceFont = UIManager.getFont("Label.font"); //$NON-NLS-1$
-			uiFont = sourceFont.getName();
-			stylePlain = sourceFont.getStyle();
-		}
-		Font fontPlain = new Font(uiFont, stylePlain, PosUIManager.getDefaultFontSize());
-		Font fontBold = new Font(uiFont, styleBold, PosUIManager.getDefaultFontSize());
-	
-		FontUIResource font = new FontUIResource(fontPlain);
-		FontUIResource boldFont = new FontUIResource(fontBold);
-	
-		setUIFont(font, boldFont);
-	
-		UIManager.put("ArrowButton.size", font); //$NON-NLS-1$
-		UIManager.put("OptionPane.buttonFont", font); //$NON-NLS-1$ //$NON-NLS-2$
-		UIManager.put("Button.font", font); //$NON-NLS-1$
-		UIManager.put("ToggleButton.font", font); //$NON-NLS-1$
-		UIManager.put("RadioButton.font", font); //$NON-NLS-1$
-		UIManager.put("CheckBox.font", font); //$NON-NLS-1$
-		UIManager.put("ColorChooser.font", font); //$NON-NLS-1$
-		UIManager.put("ComboBox.font", font); //$NON-NLS-1$
-		UIManager.put("Label.font", font); //$NON-NLS-1$
-		UIManager.put("List.font", font); //$NON-NLS-1$
-		UIManager.put("MenuBar.font", font); //$NON-NLS-1$
-		UIManager.put("MenuItem.font", font); //$NON-NLS-1$
-		UIManager.put("RadioButtonMenuItem.font", font); //$NON-NLS-1$
-		UIManager.put("CheckBoxMenuItem.font", font); //$NON-NLS-1$
-		UIManager.put("Menu.font", font); //$NON-NLS-1$
-		UIManager.put("PopupMenu.font", font); //$NON-NLS-1$
-		UIManager.put("OptionPane.font", font); //$NON-NLS-1$
-		UIManager.put("Panel.font", font); //$NON-NLS-1$
-		UIManager.put("ProgressBar.font", font); //$NON-NLS-1$
-		UIManager.put("ScrollPane.font", font); //$NON-NLS-1$
-		UIManager.put("Viewport.font", font); //$NON-NLS-1$
-		UIManager.put("TabbedPane.font", font); //$NON-NLS-1$
-		UIManager.put("Table.font", font); //$NON-NLS-1$
-		UIManager.put("TableHeader.font", font); //$NON-NLS-1$
-		UIManager.put("TextField.font", font); //$NON-NLS-1$
-		UIManager.put("PasswordField.font", font); //$NON-NLS-1$
-		UIManager.put("TextArea.font", font); //$NON-NLS-1$
-		UIManager.put("TextPane.font", font); //$NON-NLS-1$
-		UIManager.put("EditorPane.font", font); //$NON-NLS-1$
-		UIManager.put("TitledBorder.font", boldFont); //$NON-NLS-1$
-		UIManager.put("ToolBar.font", font); //$NON-NLS-1$
-		UIManager.put("ToolTip.font", font); //$NON-NLS-1$
-		UIManager.put("Tree.font", font); //$NON-NLS-1$
-		}*/
-
-	private void initializeFont() {
-		java.util.Enumeration keys = UIManager.getDefaults().keys();
-		while (keys.hasMoreElements()) {
-
-			Object key = keys.nextElement();
-			Object value = UIManager.get(key);
-
-			if (value != null && value instanceof javax.swing.plaf.FontUIResource) {
-				javax.swing.plaf.FontUIResource f = (FontUIResource) value;
-				String fontName = f.getFontName();
-				//fontName = "Noto Sans";
-
-				Font font = new Font(fontName, f.getStyle(), PosUIManager.getDefaultFontSize());
-				UIManager.put(key, new javax.swing.plaf.FontUIResource(font));
-
-				/*	Font fontBold = new Font(f.getFontName(), Font.BOLD, PosUIManager.getDefaultFontSize());
-				
-				if (key.equals("TitledBorder.font")) {
-					UIManager.put(key, new javax.swing.plaf.FontUIResource(fontBold));
-				}
-				else {
-					UIManager.put(key, new javax.swing.plaf.FontUIResource(font));
-				}*/
-			}
-		}
 	}
 
 	private void initLengthUnit() {
